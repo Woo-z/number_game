@@ -26,8 +26,9 @@
   <p>1~100까지 랜덤 숫자를 선택하세요. 더 높은지 낮은지 알려드릴게요.</p>
 
   <form action="">
+    <!-- 제약사항 type=number 추가 최소값 1, 최대값 100 -->
     <label for="guessField">숫자를 입력하세요: </label>
-    <input type="text" id="guessField" class="guessField">
+    <input type="number" min="1" max='100' id="guessField" class="guessField">
     <input type="submit" value="submit" class="guessSubmit">
   </form>
 
@@ -51,11 +52,39 @@
     const lastResult = document.querySelector('.lastResult');
     const lowOrHigh = document.querySelector('.lowOrHigh');
 
-    // Q3. 변수 두 가지를 선언(let)해주세요. guessCount 초기값 1, restButton 선언만
+    // Q3. 변수 두 가지를 선언(let)해주세요. guessCount 초기값 1, reestButton 선언만
     let guessCount = 1;
-    let restButton;
+    let resetButton;
 
 
+    function setGameover() {
+      // 게임이 끝나는 로직
+      guessField.disabled = true;
+      guessSubmit.disabled = true;
+      // 버튼 태그인 리셋버튼을 생성해주세요.
+      resetButton = document.createElement('button');
+      resetButton.textContent = "새 게임하기";
+      document.body.appendChild(resetButton);
+      // 생성한 DOM요소의 텍스트 컨텐츠를 '새 게임하기'로 변경합니다.
+      // 만든 DOM 버튼을 body태그 안에 추가합니다.
+    }
+
+    // Q4. 올바른 번호인지 확인하는 함수 만들기
+    function checkGuess(event) {
+      // event.preventDefault;
+      // Q4. 사용자가 추측한 번호를 알아내는 변수
+      const userGuess = Number(guessField.value);
+      // 제약사항 숫자만 받기
+      if (randomNumber === userGuess) {
+        lastResult.textContent = "Congratulations! Correct!";
+        // 플레이어가 더 많은 추측을 입력할 수 없도록 합니다(이렇게 하면 게임이 엉망이 됩니다)
+        setGameover();
+      }
+    }
+
+    // 이벤트 리스너 만들기 click 했을 때 checkGuess 함수를 실행하는 리스너 추가
+
+    guessSubmit.addEventListener('click', checkGuess);
   </script>
 </body>
 
