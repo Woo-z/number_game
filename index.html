@@ -71,7 +71,8 @@
 
     // Q4. 올바른 번호인지 확인하는 함수 만들기
     function checkGuess(event) {
-      // event.preventDefault;
+      // 기본값 막기
+      event.preventDefault();
       // Q4. 사용자가 추측한 번호를 알아내는 변수
       const userGuess = Number(guessField.value);
       // 제약사항 숫자만 받기
@@ -79,12 +80,19 @@
         lastResult.textContent = "Congratulations! Correct!";
         // 플레이어가 더 많은 추측을 입력할 수 없도록 합니다(이렇게 하면 게임이 엉망이 됩니다)
         setGameover();
+      } else if (guessCount === 10) {
+        lastResult.textContent = "게임 오버! 10회를 모두 사용하셨습니다."
+        setGameover();
+      } else {
+        
       }
+      guessCount++;
     }
-
+      
     // 이벤트 리스너 만들기 click 했을 때 checkGuess 함수를 실행하는 리스너 추가
 
     guessSubmit.addEventListener('click', checkGuess);
+
   </script>
 </body>
 
